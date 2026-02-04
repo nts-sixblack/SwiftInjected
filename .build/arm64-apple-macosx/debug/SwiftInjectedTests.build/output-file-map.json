@@ -1,0 +1,12 @@
+{
+  "": {
+    "swift-dependencies": "/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedTests.build/master.swiftdeps"
+  },
+  "/Users/saunguyen/Desktop/Library/SwiftInjected/Tests/SwiftInjectedTests/SwiftInjectedTests.swift": {
+    "dependencies": "/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedTests.build/SwiftInjectedTests.d",
+    "object": "/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedTests.build/SwiftInjectedTests.swift.o",
+    "swiftmodule": "/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedTests.build/SwiftInjectedTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedTests.build/SwiftInjectedTests.swiftdeps",
+    "diagnostics": "/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedTests.build/SwiftInjectedTests.dia"
+  }
+}

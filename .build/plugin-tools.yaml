@@ -1,0 +1,112 @@
+client:
+  name: basic
+  file-system: device-agnostic
+tools: {}
+targets:
+  "PackageStructure": ["<PackageStructure>"]
+  "SwiftInjected-arm64-apple-macosx26.0-debug.module": ["<SwiftInjected-arm64-apple-macosx26.0-debug.module>"]
+  "SwiftInjectedPackageTests-arm64-apple-macosx26.0-debug.module": ["<SwiftInjectedPackageTests-arm64-apple-macosx26.0-debug.module>"]
+  "SwiftInjectedPackageTests-arm64-apple-macosx26.0-debug.test": ["<SwiftInjectedPackageTests-arm64-apple-macosx26.0-debug.test>"]
+  "SwiftInjectedTests-arm64-apple-macosx26.0-debug.module": ["<SwiftInjectedTests-arm64-apple-macosx26.0-debug.module>"]
+  "main": ["<SwiftInjected-arm64-apple-macosx26.0-debug.module>"]
+  "test": ["<SwiftInjected-arm64-apple-macosx26.0-debug.module>","<SwiftInjectedPackageTests-arm64-apple-macosx26.0-debug.test>","<SwiftInjectedTests-arm64-apple-macosx26.0-debug.module>"]
+default: "main"
+nodes:
+  "/Users/saunguyen/Desktop/Library/SwiftInjected/Sources/SwiftInjected/":
+    is-directory-structure: true
+    content-exclusion-patterns: [".git",".build"]
+  "/Users/saunguyen/Desktop/Library/SwiftInjected/Tests/SwiftInjectedTests/":
+    is-directory-structure: true
+    content-exclusion-patterns: [".git",".build"]
+commands:
+  "/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjected.build/sources":
+    tool: write-auxiliary-file
+    inputs: ["<sources-file-list>","/Users/saunguyen/Desktop/Library/SwiftInjected/Sources/SwiftInjected/Injected.swift","/Users/saunguyen/Desktop/Library/SwiftInjected/Sources/SwiftInjected/InjectedObservable.swift"]
+    outputs: ["/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjected.build/sources"]
+    description: "Write auxiliary file /Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjected.build/sources"
+
+  "/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedPackageTests.build/sources":
+    tool: write-auxiliary-file
+    inputs: ["<sources-file-list>","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedPackageTests.derived/runner.swift"]
+    outputs: ["/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedPackageTests.build/sources"]
+    description: "Write auxiliary file /Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedPackageTests.build/sources"
+
+  "/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedPackageTests.derived/runner.swift":
+    tool: test-entry-point-tool
+    inputs: []
+    outputs: ["/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedPackageTests.derived/runner.swift"]
+
+  "/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedPackageTests.product/Objects.LinkFileList":
+    tool: write-auxiliary-file
+    inputs: ["<link-file-list>","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjected.build/Injected.swift.o","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjected.build/InjectedObservable.swift.o","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedPackageTests.build/runner.swift.o","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedTests.build/SwiftInjectedTests.swift.o"]
+    outputs: ["/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedPackageTests.product/Objects.LinkFileList"]
+    description: "Write auxiliary file /Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedPackageTests.product/Objects.LinkFileList"
+
+  "/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedTests.build/sources":
+    tool: write-auxiliary-file
+    inputs: ["<sources-file-list>","/Users/saunguyen/Desktop/Library/SwiftInjected/Tests/SwiftInjectedTests/SwiftInjectedTests.swift"]
+    outputs: ["/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedTests.build/sources"]
+    description: "Write auxiliary file /Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedTests.build/sources"
+
+  "/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt":
+    tool: write-auxiliary-file
+    inputs: ["<swift-get-version>","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"]
+    outputs: ["/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"]
+    always-out-of-date: "true"
+    description: "Write auxiliary file /Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+
+  "<SwiftInjected-arm64-apple-macosx26.0-debug.module>":
+    tool: phony
+    inputs: ["/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjected.build/Injected.swift.o","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjected.build/InjectedObservable.swift.o","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/Modules/SwiftInjected.swiftmodule"]
+    outputs: ["<SwiftInjected-arm64-apple-macosx26.0-debug.module>"]
+
+  "<SwiftInjectedPackageTests-arm64-apple-macosx26.0-debug.module>":
+    tool: phony
+    inputs: ["/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedPackageTests.build/runner.swift.o","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/Modules/SwiftInjectedPackageTests.swiftmodule"]
+    outputs: ["<SwiftInjectedPackageTests-arm64-apple-macosx26.0-debug.module>"]
+
+  "<SwiftInjectedPackageTests-arm64-apple-macosx26.0-debug.test>":
+    tool: phony
+    inputs: ["/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedPackageTests.xctest/Contents/MacOS/SwiftInjectedPackageTests"]
+    outputs: ["<SwiftInjectedPackageTests-arm64-apple-macosx26.0-debug.test>"]
+
+  "<SwiftInjectedTests-arm64-apple-macosx26.0-debug.module>":
+    tool: phony
+    inputs: ["/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedTests.build/SwiftInjectedTests.swift.o","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/Modules/SwiftInjectedTests.swiftmodule"]
+    outputs: ["<SwiftInjectedTests-arm64-apple-macosx26.0-debug.module>"]
+
+  "C.SwiftInjected-arm64-apple-macosx26.0-debug.module":
+    tool: shell
+    inputs: ["/Users/saunguyen/Desktop/Library/SwiftInjected/Sources/SwiftInjected/Injected.swift","/Users/saunguyen/Desktop/Library/SwiftInjected/Sources/SwiftInjected/InjectedObservable.swift","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjected.build/sources"]
+    outputs: ["/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjected.build/Injected.swift.o","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjected.build/InjectedObservable.swift.o","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/Modules/SwiftInjected.swiftmodule"]
+    description: "Compiling Swift Module 'SwiftInjected' (2 sources)"
+    args: ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-module-name","SwiftInjected","-emit-dependencies","-emit-module","-emit-module-path","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/Modules/SwiftInjected.swiftmodule","-output-file-map","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjected.build/output-file-map.json","-parse-as-library","-incremental","-c","@/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjected.build/sources","-I","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/Modules","-target","arm64-apple-macosx10.15","-incremental","-enable-batch-mode","-serialize-diagnostics","-index-store-path","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/index/store","-Onone","-enable-testing","-j10","-DSWIFT_PACKAGE","-DDEBUG","-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE","-module-cache-path","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/ModuleCache","-parseable-output","-parse-as-library","-emit-objc-header","-emit-objc-header-path","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjected.build/include/SwiftInjected-Swift.h","-color-diagnostics","-swift-version","5","-plugin-path","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks","-I","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-L","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-g","-Xcc","-isysroot","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk","-Xcc","-F","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-Xcc","-F","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks","-Xcc","-fPIC","-Xcc","-g","-package-name","swiftinjected"]
+
+  "C.SwiftInjectedPackageTests-arm64-apple-macosx26.0-debug.module":
+    tool: shell
+    inputs: ["/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedPackageTests.derived/runner.swift","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/Modules/SwiftInjectedTests.swiftmodule","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedPackageTests.build/sources"]
+    outputs: ["/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedPackageTests.build/runner.swift.o","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/Modules/SwiftInjectedPackageTests.swiftmodule"]
+    description: "Compiling Swift Module 'SwiftInjectedPackageTests' (1 sources)"
+    args: ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-module-name","SwiftInjectedPackageTests","-emit-dependencies","-emit-module","-emit-module-path","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/Modules/SwiftInjectedPackageTests.swiftmodule","-output-file-map","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedPackageTests.build/output-file-map.json","-parse-as-library","-incremental","-c","@/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedPackageTests.build/sources","-I","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/Modules","-target","arm64-apple-macosx10.15","-incremental","-enable-batch-mode","-serialize-diagnostics","-index-store-path","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/index/store","-Onone","-enable-testing","-Xfrontend","-enable-cross-import-overlays","-j10","-DSWIFT_PACKAGE","-DDEBUG","-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE","-module-cache-path","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/ModuleCache","-parseable-output","-parse-as-library","-emit-objc-header","-emit-objc-header-path","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedPackageTests.build/include/SwiftInjectedPackageTests-Swift.h","-color-diagnostics","-plugin-path","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks","-I","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-L","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-g","-Xcc","-isysroot","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk","-Xcc","-F","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-Xcc","-F","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks","-Xcc","-fPIC","-Xcc","-g","-package-name","swiftinjected"]
+
+  "C.SwiftInjectedPackageTests-arm64-apple-macosx26.0-debug.test":
+    tool: shell
+    inputs: ["/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjected.build/Injected.swift.o","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjected.build/InjectedObservable.swift.o","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedPackageTests.build/runner.swift.o","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedTests.build/SwiftInjectedTests.swift.o","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedPackageTests.product/Objects.LinkFileList"]
+    outputs: ["/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedPackageTests.xctest/Contents/MacOS/SwiftInjectedPackageTests"]
+    description: "Linking ./.build/arm64-apple-macosx/debug/SwiftInjectedPackageTests.xctest/Contents/MacOS/SwiftInjectedPackageTests"
+    args: ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-L","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug","-o","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedPackageTests.xctest/Contents/MacOS/SwiftInjectedPackageTests","-module-name","SwiftInjectedPackageTests","-Xlinker","-no_warn_duplicate_libraries","-Xlinker","-bundle","-Xlinker","-rpath","-Xlinker","@loader_path/../../../","@/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedPackageTests.product/Objects.LinkFileList","-target","arm64-apple-macosx14.0","-Xlinker","-add_ast_path","-Xlinker","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/Modules/SwiftInjected.swiftmodule","-Xlinker","-add_ast_path","-Xlinker","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/Modules/SwiftInjectedPackageTests.swiftmodule","-Xlinker","-add_ast_path","-Xlinker","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/Modules/SwiftInjectedTests.swiftmodule","-plugin-path","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks","-I","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-L","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-g"]
+
+  "C.SwiftInjectedTests-arm64-apple-macosx26.0-debug.module":
+    tool: shell
+    inputs: ["/Users/saunguyen/Desktop/Library/SwiftInjected/Tests/SwiftInjectedTests/SwiftInjectedTests.swift","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/Modules/SwiftInjected.swiftmodule","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedTests.build/sources"]
+    outputs: ["/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedTests.build/SwiftInjectedTests.swift.o","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/Modules/SwiftInjectedTests.swiftmodule"]
+    description: "Compiling Swift Module 'SwiftInjectedTests' (1 sources)"
+    args: ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-module-name","SwiftInjectedTests","-emit-dependencies","-emit-module","-emit-module-path","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/Modules/SwiftInjectedTests.swiftmodule","-output-file-map","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedTests.build/output-file-map.json","-parse-as-library","-incremental","-c","@/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedTests.build/sources","-I","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/Modules","-target","arm64-apple-macosx14.0","-incremental","-enable-batch-mode","-serialize-diagnostics","-index-store-path","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/index/store","-Onone","-enable-testing","-Xfrontend","-enable-cross-import-overlays","-j10","-DSWIFT_PACKAGE","-DDEBUG","-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE","-module-cache-path","/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/ModuleCache","-parseable-output","-parse-as-library","-color-diagnostics","-swift-version","5","-plugin-path","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks","-I","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-L","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-g","-Xcc","-isysroot","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk","-Xcc","-F","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-Xcc","-F","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks","-Xcc","-fPIC","-Xcc","-g","-package-name","swiftinjected"]
+
+  "PackageStructure":
+    tool: package-structure-tool
+    inputs: ["/Users/saunguyen/Desktop/Library/SwiftInjected/Sources/SwiftInjected/","/Users/saunguyen/Desktop/Library/SwiftInjected/Tests/SwiftInjectedTests/","/Users/saunguyen/Desktop/Library/SwiftInjected/Package.swift","/Users/saunguyen/Desktop/Library/SwiftInjected/Package.resolved"]
+    outputs: ["<PackageStructure>"]
+    description: "Planning build"
+    allow-missing-inputs: true
+

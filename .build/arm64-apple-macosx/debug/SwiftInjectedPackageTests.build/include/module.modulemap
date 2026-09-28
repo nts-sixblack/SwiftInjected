@@ -1,3 +1,0 @@
-module SwiftInjectedPackageTests {
-    header "/Users/saunguyen/Desktop/Library/SwiftInjected/.build/arm64-apple-macosx/debug/SwiftInjectedPackageTests.build/include/SwiftInjectedPackageTests-Swift.h"
-}

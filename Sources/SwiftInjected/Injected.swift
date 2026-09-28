@@ -10,17 +10,27 @@ import Foundation
 public struct Dependency {
   public typealias ResolveBlock<T> = () -> T
 
-  fileprivate(set) var value: Any!
-  private let block: ResolveBlock<Any>
+  fileprivate var value: Any?
+  fileprivate let block: ResolveBlock<Any>
   fileprivate let name: String
+  fileprivate let typeKey: ObjectIdentifier
 
   public init<T>(_ block: @escaping ResolveBlock<T>) {
     self.block = block
+    self.value = nil
     name = String(describing: T.self)
+    typeKey = ObjectIdentifier(T.self)
   }
 
-  mutating func resolve() {
-    value = block()
+  /// Resolves and caches the value. Returns the resolved value.
+  @discardableResult
+  mutating func resolve() -> Any {
+    if let value = value {
+      return value
+    }
+    let resolved = block()
+    value = resolved
+    return resolved
   }
 }
 
@@ -28,7 +38,12 @@ public struct Dependency {
 open class Dependencies: Sequence {
   public private(set) static var shared = Dependencies()
 
+  /// Storage: keyed by ObjectIdentifier for O(1) lookup
+  private var dependencyMap = [ObjectIdentifier: Int]()
   var dependencies = [Dependency]()
+
+  /// Lock for thread-safe lazy resolution
+  private let lock = NSLock()
 
   @resultBuilder public struct DependencyBuilder {
     public static func buildBlock(_ dependency: Dependency) -> Dependency { dependency }
@@ -43,25 +58,73 @@ open class Dependencies: Sequence {
     register(dependency())
   }
 
-  /// Builds (resolves) all dependencies graph
+  /// Builds the dependency graph.
+  ///
+  /// Dependencies are resolved **lazily** on first access, so this method
+  /// only publishes the container as `shared`. If you need every dependency
+  /// to be available immediately (e.g. for validation), call `buildEager()`.
   open func build() {
-    // We assuming that at this point all needed dependencies are registered
-    for index in dependencies.startIndex..<dependencies.endIndex {
-      dependencies[index].resolve()
-    }
     Self.shared = self
   }
 
-  /// Returns iterator for all registered dependencies
+  /// Eagerly resolves every registered dependency, then publishes.
+  /// Use only when you need to validate the full graph at startup.
+  open func buildEager() {
+    lock.lock()
+    for index in dependencies.indices {
+      dependencies[index].resolve()
+    }
+    lock.unlock()
+    Self.shared = self
+  }
+
+  /// Returns iterator for all registered dependencies (resolves lazily)
   public func makeIterator() -> AnyIterator<Any> {
-    var iter = dependencies.makeIterator()
-    return AnyIterator { iter.next()?.value }
+    var index = dependencies.startIndex
+    return AnyIterator {
+      guard index < self.dependencies.endIndex else { return nil }
+      let value = self.resolveDependency(at: index)
+      index += 1
+      return value
+    }
   }
 
   /// Return dependency by given camelCase name of the object type
   /// For example: if dependency registered as `MyService` name should be `myService`
   public subscript<T>(dynamicMember name: String) -> T? {
-    dependencies.first { $0.name == name.prefix(1).capitalized + name.dropFirst() }?.value as? T
+    let typeName = name.prefix(1).capitalized + name.dropFirst()
+    lock.lock()
+    defer { lock.unlock() }
+    guard let index = dependencies.firstIndex(where: { $0.name == typeName }) else {
+      return nil
+    }
+    return dependencies[index].resolve() as? T
+  }
+
+  // MARK: - Internal Resolution
+
+  func resolve<T>() -> T {
+    let key = ObjectIdentifier(T.self)
+    lock.lock()
+    defer { lock.unlock() }
+
+    // O(1) lookup by type
+    if let index = dependencyMap[key] {
+      return dependencies[index].resolve() as! T
+    }
+
+    // Fallback: check by `is T` for protocol conformance resolution
+    if let index = dependencies.firstIndex(where: {
+      // Resolve on the fly if needed, then check type
+      let val = $0.value ?? $0.block()
+      return val is T
+    }) {
+      // Cache the mapping for future lookups
+      dependencyMap[key] = index
+      return dependencies[index].resolve() as! T
+    }
+
+    fatalError("Can't resolve \(T.self)")
   }
 
   // MARK: - Private
@@ -70,18 +133,19 @@ open class Dependencies: Sequence {
 
   fileprivate func register(_ dependency: Dependency) {
     // Avoid duplicates
-    guard dependencies.firstIndex(where: { $0.name == dependency.name }) == nil else {
-      debugPrint("\(String(describing: dependency.name)) already registered, ignoring")
+    guard dependencyMap[dependency.typeKey] == nil else {
+      debugPrint("\(dependency.name) already registered, ignoring")
       return
     }
+    let index = dependencies.count
     dependencies.append(dependency)
+    dependencyMap[dependency.typeKey] = index
   }
 
-  fileprivate func resolve<T>() -> T {
-    guard let dependency = dependencies.first(where: { $0.value is T })?.value as? T else {
-      fatalError("Can't resolve \(T.self)")
-    }
-    return dependency
+  private func resolveDependency(at index: Int) -> Any {
+    lock.lock()
+    defer { lock.unlock() }
+    return dependencies[index].resolve()
   }
 }
 

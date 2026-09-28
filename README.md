@@ -10,7 +10,7 @@ Add the following to your `Package.swift` file:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/nts-sixblack/SwiftInjected.git", from: "1.0.0")
+    .package(url: "https://github.com/nts-sixblack/SwiftInjected.git", from: "2.0.0")
 ]
 ```
 
@@ -88,6 +88,26 @@ struct MyView: View {
 
 
 ## Advanced Usage
+
+### Lazy Resolution (Default)
+
+Starting in version 2.0.0, calling `dependencies.build()` registers dependencies to be resolved **lazily** on first access. This improves startup performance and prevents unnecessary initialization:
+
+```swift
+dependencies.build() // Resolves dependencies on first access
+```
+
+### Eager Resolution
+
+If you prefer eager resolution (for example, to validate the entire dependency graph at startup), use `buildEager()`:
+
+```swift
+dependencies.buildEager() // Resolves all dependencies immediately
+```
+
+### Thread Safety
+
+Resolution is thread-safe using an internal lock, and lookups are optimized to O(1) via type identifiers.
 
 ### Customizing Dependency Name
 
